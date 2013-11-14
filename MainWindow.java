@@ -47,6 +47,7 @@ import java.awt.event.WindowListener;
 import java.io.IOException;
 
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 
 public class MainWindow extends WindowAdapter implements ItemListener, ActionListener, Runnable, WindowListener{
 	private JFrame frame;
