@@ -156,6 +156,8 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 				acRadio.setEnabled(false);
 				batteryRadio.setEnabled(false);
 				INSTANCE.GetSystemPowerStatus(batteryStatus);
+				if (powerAction)
+					break;
 				if (batteryStatus.getACLineStatus() == 1)
 					continue;
 				if (batteryStatus.getBatteryLifeInt() <= percent)
