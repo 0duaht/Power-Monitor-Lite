@@ -26,3 +26,9 @@ Essentially, if power supply is interrupted, and ten seconds into the interval, 
 shutting down) is deferred, until power is interrupted again, and then the process of monitoring begins all over.
 
 The selected monitor could be stopped at anytime.
+
+
+The app was developed using libraries imported from the <a href="https://github.com/twall/jna">JNA project</a>.
+Thus, <a href="https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.0.0/jna-4.0.0.jar">jna 4.0
+</a> is needed for developers
+interested in working on this project.
