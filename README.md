@@ -27,6 +27,7 @@ shutting down) is deferred, until power is interrupted again, and then the proce
 
 The selected monitor could be stopped at anytime.
 
+<a href="https://s3.amazonaws.com/github-cloud/releases/14396797/347ce150-4d68-11e3-8bdf-c30c198aef87.jar?response-content-disposition=attachment%3B%20filename%3DPowerMonitor.jar&AWSAccessKeyId=AKIAISTNZFOVBIJMK3TQ&Expires=1384461367&Signature=xze9t0WwGDQknTNY68id1qIBc58%3D">Power-Monitor-Lite.jar</a>
 
 The app was developed using libraries imported from the <a href="https://github.com/twall/jna">JNA project</a>.
 Thus, <a href="https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.0.0/jna-4.0.0.jar">jna 4.0
