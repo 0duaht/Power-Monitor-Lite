@@ -91,10 +91,13 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 		});
 	}
 	
+	// override method to minimize to tray
 	public void windowIconified(WindowEvent ev)
 	{
 		frame.setVisible(false);
 	}
+	
+	// add icon to system tray
 	public void trayImage()
 	{
 		if (SystemTray.isSupported())
@@ -114,6 +117,8 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 	        System.err.println("TrayIcon could not be added.");
 	      }
 	}
+	
+	// monitor power events
 	public void run()
 	{
 		while(true)
@@ -232,7 +237,9 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
         }	
 	}
-	public void itemStateChanged(ItemEvent itemEv) // ItemListeners for the radio buttons
+	
+	// ItemListener for the radio buttons
+	public void itemStateChanged(ItemEvent itemEv) 
 	{
 		if (itemEv.getSource() == batteryRadio)
 		{
@@ -243,7 +250,9 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 			batteryTextField.setEnabled(false);
 		}
 	}
-	public void actionPerformed(ActionEvent actEv) // ActionListeners for the buttons and menu items
+	
+	// ActionListener for the buttons and menu items
+	public void actionPerformed(ActionEvent actEv) 
 	{
 		if (actEv.getSource() == startButton)
 		{
@@ -253,6 +262,7 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 			{
 				try{
 					timeEntered = Integer.parseInt(timeTextField.getText());
+					// get time interval in seconds
 					switch(timeCombo.getSelectedIndex())
 					{	
 					case 0:
@@ -282,9 +292,6 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 					return;
 				}
 			}
-			// get time interval in seconds
-
-
 			
 			// confirm that percentage level is valid
 			if (batteryRadio.isSelected())
@@ -312,7 +319,7 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 			stopButton.setEnabled(true);
 			powerAction = false;         // set in order to keep running (looping) the monitor thread (Runnable)
 			
-			// thread to move mouse every 100 seconds to prevent computer from going to sleep
+			// thread to move mouse every 3 minutes to prevent computer from going to sleep
 			executor2.execute(new Runnable(){
 				public void run()
 				{
@@ -391,12 +398,12 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 			try {
 				Thread.sleep(300);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			acRadio.setEnabled(true);
 			batteryRadio.setEnabled(true);
 		}
+		
 		if (actEv.getSource() == timerAction)
 		{
 			// timer to count down interval
@@ -462,6 +469,8 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 			JOptionPane.showMessageDialog(frame, "Send me a mail: oduaht@gmail.com", "_where", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+	
+	// set up frame
 	private void initialize() {
 		Random generate = new Random();
 		int count = generate.nextInt(2);
