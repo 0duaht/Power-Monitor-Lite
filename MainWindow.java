@@ -156,6 +156,8 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 				acRadio.setEnabled(false);
 				batteryRadio.setEnabled(false);
 				INSTANCE.GetSystemPowerStatus(batteryStatus);
+				if (powerAction)
+					break;
 				if (batteryStatus.getACLineStatus() == 1)
 					continue;
 				if (batteryStatus.getBatteryLifeInt() <= percent)
@@ -251,6 +253,27 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 			{
 				try{
 					timeEntered = Integer.parseInt(timeTextField.getText());
+					switch(timeCombo.getSelectedIndex())
+					{	
+					case 0:
+						totalTime = timeEntered;
+						initialTime = totalTime;
+						if (totalTime > 360000000 | totalTime <= 1)
+							throw new NumberFormatException("");
+						break;	
+					case 1:	
+						totalTime = timeEntered * 60;
+						initialTime = totalTime;
+						if (totalTime > 360000000 | totalTime <= 1)
+							throw new NumberFormatException("");
+						break;
+					case 2: 
+						totalTime = timeEntered * 3600;
+						initialTime = totalTime;
+						if (totalTime > 360000000 | totalTime <= 1)
+							throw new NumberFormatException("");
+						break;
+					}
 				}
 				catch(NumberFormatException e)
 				{	
@@ -259,6 +282,9 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 					return;
 				}
 			}
+			// get time interval in seconds
+
+
 			
 			// confirm that percentage level is valid
 			if (batteryRadio.isSelected())
@@ -280,40 +306,6 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 				}
 			}
 			
-			// get time interval in seconds
-			switch(timeCombo.getSelectedIndex())
-			{	
-			case 0:
-				totalTime = timeEntered;
-				initialTime = totalTime;
-				if (totalTime > 360000000 | totalTime < 0)
-				{
-					JOptionPane.showMessageDialog(frame, "Enter valid time interval", "Above Limit", JOptionPane.ERROR_MESSAGE);
-					timeTextField.setText("");
-					return;
-				}
-				break;	
-			case 1:	
-				totalTime = timeEntered * 60;
-				initialTime = totalTime;
-				if (totalTime > 360000000 | totalTime < 0)
-				{
-					JOptionPane.showMessageDialog(frame, "Enter valid time interval", "Above Limit", JOptionPane.ERROR_MESSAGE);
-					timeTextField.setText("");
-					return;
-				}
-				break;
-			case 2: 
-				totalTime = timeEntered * 3600;
-				initialTime = totalTime;
-				if (totalTime > 360000000 | totalTime < 0)
-				{
-					JOptionPane.showMessageDialog(frame, "Enter valid time interval", "Above Limit", JOptionPane.ERROR_MESSAGE);
-					timeTextField.setText("");
-					return;
-				}
-				break;
-			}
 			statusLabel.setText("Now listening for power events...");
 			trayIcon.displayMessage(null, "Now listening for power events...",  TrayIcon.MessageType.INFO);
 			startButton.setEnabled(false);
@@ -327,7 +319,7 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 					while(true)
 					{
 						try {
-							Thread.sleep(10000);
+							Thread.sleep(180000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -396,6 +388,12 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 			startButton.setEnabled(true);
 			stopButton.setEnabled(false);
 			powerAction = true;  // break out of all currently running monitor threads
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			acRadio.setEnabled(true);
 			batteryRadio.setEnabled(true);
 		}
@@ -522,7 +520,6 @@ public class MainWindow extends WindowAdapter implements ItemListener, ActionLis
 		timeCombo = new JComboBox(timeOptions);
 		timeCombo.setBounds(197, 117, 121, 32);
 		timeCombo.setFont(new Font("Segoe Print", Font.PLAIN, 13));
-		timeCombo.setToolTipText("");
 		timeCombo.addActionListener(this);
 		
 		startButton = new JButton("Start");
